@@ -29,6 +29,10 @@ class Rocket extends Phaser.GameObjects.Sprite {
         }
         // reset on miss
         if(this.y <= borderUISize * 3 + borderPadding) {
+            // if we were fired and reached the top without a collision, count as a miss
+            if(this.isFiring && this.scene && typeof this.scene.onRocketMiss === 'function') {
+                this.scene.onRocketMiss()
+            }
             this.isFiring = false
             this.y = game.config.height - borderUISize - borderPadding
         }
